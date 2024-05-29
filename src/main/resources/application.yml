@@ -1,0 +1,36 @@
+server:
+  port: 0
+  servlet:
+    context-path: /resource-server2
+
+spring:
+  application:
+    name: resource-server2
+  profiles:
+    active: local
+  cloud:
+    config:
+      fail-fast: true
+      retry:
+        max-attempts: 20
+        max-interval: 15000
+        initial-interval: 10000
+      discovery:
+        enabled: true
+        service-id: config-server
+
+eureka:
+  client:
+    enabled: true
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8010/eureka
+  instance:
+    prefer-ip-address: false
+    non-secure-port-enabled: true
+    secure-port-enabled: false
+    instance-id: ${spring.application.name}:${random.int[1,9999]} # Random instance ID
+    metadata-map:
+      instance.port: ${local.server.port}  # Retrieve port from local server configuration
+    hostname: localhost
