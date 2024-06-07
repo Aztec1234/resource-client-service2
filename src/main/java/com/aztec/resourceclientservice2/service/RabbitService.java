@@ -1,6 +1,7 @@
 package com.aztec.resourceclientservice2.service;
 
 
+import com.aztec.dto.RabbitDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
@@ -21,9 +22,8 @@ public class RabbitService {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void sendMessage(String queueName, String message) {
-        rabbitTemplate.convertAndSend(queueName, message);
-        System.out.println("Message sent: " + message);
+    public void sendMessage(String queueName, RabbitDTO rabbitDTO) {
+        rabbitTemplate.convertAndSend(queueName, rabbitDTO);
     }
 
     @Bean
